@@ -35,6 +35,7 @@
         }
 
         .fade-in-up {
+            opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
         }
 
@@ -91,8 +92,8 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="hjem" class="min-h-screen flex items-center justify-center pt-20">
-        <div class="container mx-auto px-6 text-center">
+    <section id="hjem" class="relative min-h-screen flex items-center justify-center pt-20 bg-white">
+        <div class="container mx-auto px-6 text-center relative z-10">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-5xl md:text-7xl font-bold mb-6 fade-in-up">
                     Hej, jeg er <span class="gradient-text">Max</span>
@@ -411,12 +412,17 @@
             observer.observe(el);
         });
 
-        // Parallax effect for hero section
+        // Keep parallax subtle and short to avoid overlap
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const parallax = document.querySelector('#hjem');
+            const maxScroll = 100; // Stop effect after 100px scroll
             if (parallax) {
-                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+                if (scrolled < maxScroll) {
+                    parallax.style.transform = `translateY(${scrolled * 0.2}px)`;
+                } else {
+                    parallax.style.transform = `translateY(${maxScroll * 0.2}px)`;
+                }
             }
         });
     </script>
